@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import { data } from '../database/questions.db'
-
 const Quiz = () => {
     let [index,setIndex] = useState(1)
     let [question,setQuestion] = useState(data[index-1])
@@ -20,7 +19,6 @@ console.log(Option1);
 console.log(question);
 
 const checkAns = (e,ans) =>{
-    // console.log(ans); if(!lock)
     if(lock === false) {
          if(ans === question.ans){
             console.log("true");
@@ -47,23 +45,13 @@ const Next = () => {
             setIndex(++index)
             setQuestion(data[index-1])
             setLock(false)   
-            // Option1.current.classList.remove("corret")
-            // Option1.current.classList.remove("wrong")
-            // Option2.current.classList.remove("corret")
-            // Option2.current.classList.remove("wrong")
-            // Option3.current.classList.remove("corret")
-            // Option3.current.classList.remove("wrong")
-            // Option4.current.classList.remove("corret")
-            // Option4.current.classList.remove("wrong")
             option_arr.map(option=>{
-                // console.log(option);
                 option.current.classList.remove("correct")
                 option.current.classList.remove("wrong")
                 return 0;
             })
             console.log(score);
     }
-    
 }
 
 const Reset = () => {

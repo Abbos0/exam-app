@@ -4,7 +4,7 @@ import Question from '../components/Question'
 const Main = () => {
   return (
     <div>
-      {/* <Entrance /> */}
+      <Entrance />
       <Question />
     </div>
   )
