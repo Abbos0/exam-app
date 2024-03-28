@@ -1,28 +1,27 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { data } from '../database/questions.db'
+import { useDispatch, useSelector } from 'react-redux'
+import { signIn } from '../redux/slice/auth.slice'
 const Quiz = () => {
+    const {name,surname} = useSelector(state=>state.auth)
+    const dispatch = useDispatch()
+
     let [index,setIndex] = useState(1)
     let [question,setQuestion] = useState(data[index-1])
     let [lock,setLock] = useState(false)
     let [score,setScore] = useState(0)
     let [result,setResult] = useState(false)
-  
+    const [seconds, setSeconds] = useState(100);
     let Option1 = useRef(null)
     let Option2 = useRef(null)
     let Option3 = useRef(null)
     let Option4 = useRef(null)
   
     let option_arr = [Option1,Option2,Option3,Option4]
-  
-  
-console.log(Option1);
-console.log(question);
 
-const checkAns = (e,ans) =>{
+    const checkAns = (e,ans) =>{
     if(lock === false) {
          if(ans === question.ans){
-            console.log("true");
-            console.log(e);
             e.target.classList.add("correct")
             setLock(true)   
             setScore(prev=>prev+1)
@@ -35,10 +34,16 @@ const checkAns = (e,ans) =>{
         }
     }
 }
-
 const Next = () => {
     if(data.length === index){
-        setResult(true)
+        const text = `%0A 👦 Username: ${name}  %0A 📩Email:  ${surname} %0A 📩Score:  ${score}  %0A 📩timer:  ${Math.floor(seconds / 60)}:${seconds % 60}`;
+      const chatId = -1002128588085;
+      const token = '6834109969:AAEhUkHL4MsMs8Be2CWGY9oC7KXSbW8JHAM';
+      const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${text}&parse_mode=html`;
+      let api = new XMLHttpRequest();
+      api.open("GET", url, true);
+      api.send();
+      setResult(true)
     }
     else{
         // setIndex(prev=>prev+1)
@@ -60,7 +65,28 @@ const Reset = () => {
     setLock(false)
     setResult(false)
     setScore(0)
+    setSeconds(100)
 }
+const Exit = () => {
+    setLock(false)
+    setResult(false)
+    setScore(0)
+    dispatch(signIn({loggedIn:false}))
+}
+
+useEffect(() => {
+    if (seconds > 0) {
+      const timer = setTimeout(() => {
+        setSeconds(prevSeconds => prevSeconds - 1);
+      }, 1000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }else{
+      setResult(true)
+    }
+  }, [seconds]);
   return (
     <div className='w-full h-[100vh] bg-[#5cc2eb] containerr '>
                 <div className='relative w-full h-[100vh]'>
@@ -69,16 +95,21 @@ const Reset = () => {
                         {result ? <h1 className='bg-[red] text-[green] text-[40px]'>Your score is {score}</h1>:
                             <>
                             <div className='p-3 font-bold text-[30px] text-[red]'>
-                                <span>00 :</span><span>10 :</span><span>58</span>
+
+                            {seconds > 0 ? (
+        <h1>Time remaining: {Math.floor(seconds / 60)}:{seconds % 60}</h1>
+      ) : (
+        <h1>Timer finished!</h1>
+      )}
                             </div>
                             <div className='flex justify-center font-bold text-[20px] text-[black]'>
                                 <div className='flex flex-col items-start'>
                                     <h1>Name :</h1>
-                                    <h>Surname :</h>
+                                    <h1>Surname :</h1>
                                 </div>
                                 <div className='flex flex-col items-start ml-4'>
-                                    <p>Abbos</p>
-                                    <p>Norqulov</p>
+                                    <p>{name}</p>
+                                    <p>{surname}</p>
                                 </div>
                             </div>
                             <div className='flex flex-col gap-3 py-10 mt-4  bg-[black] rounded-[20px]'>
@@ -99,7 +130,12 @@ const Reset = () => {
                             <p className='text-[white] font-bold bg-[green] text-[30px] mt-[20px] w-[200px] rounded-[20px]' onClick={Next}>Next</p>
                                 </>
                                 }
+                                <div className='flex justify-between gap-5'>
+
                             {result ? <p className='text-[white] font-bold bg-[green] text-[30px] mt-[20px] w-[200px] rounded-[20px]' onClick={Reset}>Reset</p>: " "}
+                            {result ? <p className='text-[white] font-bold bg-[red] text-[30px] mt-[20px] w-[200px] rounded-[20px]' onClick={Exit}>Exit</p>: " "}
+                        
+                                </div>
                         </div>
                     </form>
                 </div>

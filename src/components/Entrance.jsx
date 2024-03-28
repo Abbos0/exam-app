@@ -1,28 +1,21 @@
 
-import React from 'react';
-import { useState } from 'react';
-
+import React,{ useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { signIn } from '../redux/slice/auth.slice';
 
 import Question from './Question';
+
 const Entrance = () => {
+
+  const dispatch = useDispatch()
+
   const [name, setname] = useState('');
     const [surname, setsurname] = useState('');
     const handleSubmit = (event) => {
+      dispatch(signIn({loggedIn:true,name:name,surname:surname}))
       event.preventDefault();
-      const text = `%0A 👦 Username: ${name}  %0A 📩Email:  ${surname} `;
-      const chatId = -1002128588085;
-      const token = '6834109969:AAEhUkHL4MsMs8Be2CWGY9oC7KXSbW8JHAM';
-      const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${text}&parse_mode=html`;
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          setname('');
-          setsurname('');
-    }
-    )
-        .catch((error) => {
-          console.error('Error sending message:', error);
-        });
+      setsurname('')
+      setname('')
     };
 
   return (
@@ -33,8 +26,10 @@ const Entrance = () => {
             <div className='flex flex-col items-center px-[50px] gap-3 py-10'>
               <input type='text'
                value={name}
+               required
                onChange={(e) => setname(e.target.value)} className='tracking-wider capitalize w-full font-medium text-white text-[20px] px-3 outline-none bg-transparent border-solid border-white border-b-[3px] ' placeholder='Name' />
               <input type='text' 
+              required
               value={surname}
               onChange={(e) => setsurname(e.target.value)} className='tracking-wider capitalize w-full font-medium text-white text-[20px] px-3 outline-none bg-transparent border-solid border-white border-b-[3px] ' placeholder='Surname' />
               <button className='mt-5 text-[black] w-full h-[40px] hover:bg-[green] bg-[#3aab69] rounded-[30px] text-[25px] font-bold'>Send</button>
