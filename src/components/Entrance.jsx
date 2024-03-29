@@ -20,8 +20,8 @@ const Entrance = () => {
 
   return (
     <div className='relative img w-full h-[100vh]'>
-      <form onSubmit={handleSubmit} className='absolute  inset-0 flex items-center justify-center '>
-          <div className=' backdrop-blur border-solid border-[1px] rounded-[30px]  w-[400px] h-[400px] text-white'>
+      <form onSubmit={handleSubmit} className='absolute  inset-0 flex items-center justify-center  '>
+          <div className=' backdrop-blur  border-solid border-[1px] rounded-[30px] w-[350px] lg:w-[400px] h-[350px] lg:h-[400px] text-white'>
             <h1 className='text-center font-bold p-3 text-[30px] mt-10' >Global Test IT</h1>
             <div className='flex flex-col items-center px-[50px] gap-3 py-10'>
               <input type='text'

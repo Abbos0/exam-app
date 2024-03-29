@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react'
 import { data } from '../database/questions.db'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,7 +12,7 @@ const Quiz = () => {
     let [lock,setLock] = useState(false)
     let [score,setScore] = useState(0)
     let [result,setResult] = useState(false)
-    const [seconds, setSeconds] = useState(100);
+    const [seconds, setSeconds] = useState(600);
     let Option1 = useRef(null)
     let Option2 = useRef(null)
     let Option3 = useRef(null)
@@ -65,7 +66,7 @@ const Reset = () => {
     setLock(false)
     setResult(false)
     setScore(0)
-    setSeconds(100)
+    setSeconds(600)
 }
 const Exit = () => {
     setLock(false)
@@ -91,13 +92,13 @@ useEffect(() => {
     <div className='w-full h-[100vh] bg-[#5cc2eb] containerr '>
                 <div className='relative w-full h-[100vh]'>
                     <form className='absolute  inset-0 flex items-center justify-center  '>
-                        <div className=' text-center border-solid bg-[yellow] rounded-[30px]  w-[600px] p-4 text-white'>
-                        {result ? <h1 className='bg-[red] text-[green] text-[40px]'>Your score is {score}</h1>:
+                        <div className=' text-center border-solid rounded-[30px] mt-16 w-[400px] lg:w-[800px] md:w-[600px] p-4 text-white'>
+                        {result ? <h1 className=' text-[white] font-bold text-[40px]'>Your score is {score}</h1>:
                             <>
                             <div className='p-3 font-bold text-[30px] text-[red]'>
 
                             {seconds > 0 ? (
-        <h1>Time remaining: {Math.floor(seconds / 60)}:{seconds % 60}</h1>
+        <h1>{Math.floor(seconds / 60)}:{seconds % 60}</h1>
       ) : (
         <h1>Timer finished!</h1>
       )}
@@ -115,25 +116,25 @@ useEffect(() => {
                             <div className='flex flex-col gap-3 py-10 mt-4  bg-[black] rounded-[20px]'>
                                 <div className='flex gap-1 px-2 font-medium text-[25px]'>
                                     <h1 className=''>Question</h1>
-                                    <p>{index}</p>/<p className='text-[15px]'>{data.length}</p>
+                                    <p>{index}</p>/<p className='text-[26px]'>{data.length}</p>
                                 </div>
                                 <div className='flex p-2 bg-green'>
-                                    <h2 className='w-[300px] text-start px-3'>{index}. {question.question}</h2>
-                                        <div className='flex flex-col justify-start w-[200px] bg-grey '>
-                                            <p className='border-[4px] border-solid border-[#00f7ff] rounded-[20px] mb-4 bg-[white] text-[black]' ref={Option1}  onClick={(e)=>checkAns(e,1)} >{question.option1}</p>
-                                            <p className='border-[4px] border-solid border-[#00f7ff] rounded-[20px] mb-4 bg-[white] text-[black]' ref={Option2} onClick={(e)=>checkAns(e,2)} >{question.option2}</p>
-                                            <p className='border-[4px] border-solid border-[#00f7ff] rounded-[20px] mb-4 bg-[white] text-[black]' ref={Option3}  onClick={(e)=>checkAns(e,3)} >{question.option3}</p>
-                                            <p className='border-[4px] border-solid border-[#00f7ff] rounded-[20px] mb-4 bg-[white] text-[black]' ref={Option4}  onClick={(e)=>checkAns(e,4)} >{question.option4}</p>
+                                    <h2 className=' text-start  w-[60%]'>{index}. {question.question}</h2>
+                                        <div className='flex flex-col justify-start w-[200px]  '>
+                                            <p className='border-[4px] border-solid border-[#00f7ff] rounded-[20px] mb-4 bg-[white] text-[black] cursor-pointer' ref={Option1}  onClick={(e)=>checkAns(e,1)} >{question.option1}</p>
+                                            <p className='border-[4px] border-solid border-[#00f7ff] rounded-[20px] mb-4 bg-[white] text-[black] cursor-pointer' ref={Option2} onClick={(e)=>checkAns(e,2)} >{question.option2}</p>
+                                            <p className='border-[4px] border-solid border-[#00f7ff] rounded-[20px] mb-4 bg-[white] text-[black] cursor-pointer' ref={Option3}  onClick={(e)=>checkAns(e,3)} >{question.option3}</p>
+                                            <p className='border-[4px] border-solid border-[#00f7ff] rounded-[20px] mb-4 bg-[white] text-[black] cursor-pointer' ref={Option4}  onClick={(e)=>checkAns(e,4)} >{question.option4}</p>
                                         </div>
                                 </div>
                             </div>
-                            <p className='text-[white] font-bold bg-[green] text-[30px] mt-[20px] w-[200px] rounded-[20px]' onClick={Next}>Next</p>
+                            <p className='text-[white] font-bold bg-[green] text-[30px] mt-[20px] w-[200px] rounded-[20px] cursor-pointer' onClick={Next}>Next</p>
                                 </>
                                 }
-                                <div className='flex justify-between gap-5'>
+                                <div className='flex justify-center gap-5'>
 
-                            {result ? <p className='text-[white] font-bold bg-[green] text-[30px] mt-[20px] w-[200px] rounded-[20px]' onClick={Reset}>Reset</p>: " "}
-                            {result ? <p className='text-[white] font-bold bg-[red] text-[30px] mt-[20px] w-[200px] rounded-[20px]' onClick={Exit}>Exit</p>: " "}
+                            {/* {result ? <p className='text-[white] font-bold bg-[green] text-[30px] mt-[20px] w-[200px] rounded-[20px]' onClick={Reset}>Reset</p>: " "} */}
+                            {result ? <p className='text-[white] text-center font-bold bg-[red] text-[30px] m-[20px] w-[200px] rounded-[20px] cursor-pointer' onClick={Exit}>Exit</p>: " "}
                         
                                 </div>
                         </div>
