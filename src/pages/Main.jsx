@@ -5,9 +5,7 @@ import { useSelector } from 'react-redux'
 import Entrance from '../components/Entrance'
 import Question from '../components/Question'
 const Main = () => {
-
   const {loggedIn} = useSelector(state=>state.auth)
-
 
   return (
     <div>

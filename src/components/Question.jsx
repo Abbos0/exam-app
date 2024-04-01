@@ -88,20 +88,17 @@ useEffect(() => {
       setResult(true)
     }
   }, [seconds]);
+
+
   return (
     <div className='w-full h-[100vh] bg-[#5cc2eb] containerr '>
-                <div className='relative w-full h-[100vh]'>
-                    <form className='absolute  inset-0 flex items-center justify-center  '>
-                        <div className=' text-center border-solid rounded-[30px] mt-16 w-[400px] lg:w-[800px] md:w-[600px] p-4 text-white'>
-                        {result ? <h1 className=' text-[white] font-bold text-[40px]'>Your score is {score}</h1>:
-                            <>
+        <div className='relative w-full h-[100vh]'>
+            <form className='absolute  inset-0 flex items-center justify-center  '>
+                <div className=' text-center border-solid rounded-[30px] mt-16 w-[400px] lg:w-[800px] md:w-[600px] p-4 text-white'>
+                    {result ? <h1 className=' text-[white] font-bold text-[40px]'>Your score is {score}</h1>:
+                        <>
                             <div className='p-3 font-bold text-[30px] text-[red]'>
-
-                            {seconds > 0 ? (
-        <h1>{Math.floor(seconds / 60)}:{seconds % 60}</h1>
-      ) : (
-        <h1>Timer finished!</h1>
-      )}
+                                {seconds > 0 ? ( <h1>{Math.floor(seconds / 60)}:{seconds % 60}</h1> ) : ( <h1>Timer finished!</h1>)}
                             </div>
                             <div className='flex justify-center font-bold text-[20px] text-[black]'>
                                 <div className='flex flex-col items-start'>
@@ -129,19 +126,18 @@ useEffect(() => {
                                 </div>
                             </div>
                             <p className='text-[white] font-bold bg-[green] text-[30px] mt-[20px] w-[200px] rounded-[20px] cursor-pointer' onClick={Next}>Next</p>
-                                </>
-                                }
-                                <div className='flex justify-center gap-5'>
-
+                        </>
+                    }
+                        <div className='flex justify-center gap-5'>
                             {/* {result ? <p className='text-[white] font-bold bg-[green] text-[30px] mt-[20px] w-[200px] rounded-[20px]' onClick={Reset}>Reset</p>: " "} */}
                             {result ? <p className='text-[white] text-center font-bold bg-[red] text-[30px] m-[20px] w-[200px] rounded-[20px] cursor-pointer' onClick={Exit}>Exit</p>: " "}
-                        
-                                </div>
                         </div>
-                    </form>
                 </div>
+            </form>
+        </div>
     </div>
   )
 }
 
 export default Quiz
+
